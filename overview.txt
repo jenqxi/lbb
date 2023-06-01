@@ -1,0 +1,55 @@
+NAME                                             READY   STATUS    RESTARTS   AGE
+pod/counter-backend-69fb649c69-gs2kl             1/1     Running   0          67m
+pod/counter-backend-69fb649c69-j4stz             1/1     Running   0          3h25m
+pod/counter-database-6b687df44b-zb5z2            1/1     Running   0          5h20m
+pod/counter-frontend-7bb6c6b7db-ws7fm            1/1     Running   0          82m
+pod/counter-frontend-7bb6c6b7db-xldlt            1/1     Running   0          82m
+pod/counter-postgresadmin-6884cfb66c-dckch       0/1     Pending   0          28m
+pod/workspaced4744050f2044c4d-65874cdf6c-zhnb5   2/2     Running   0          16m
+
+NAME                                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                                              AGE
+service/counter-backend                     ClusterIP   172.30.219.92    <none>        8080/TCP                                             3h
+service/counter-backend-00001               ClusterIP   172.30.34.253    <none>        80/TCP,443/TCP                                       4h20m
+service/counter-backend-00001-private       ClusterIP   172.30.137.7     <none>        80/TCP,443/TCP,9090/TCP,9091/TCP,8022/TCP,8012/TCP   4h20m
+service/counter-database                    ClusterIP   172.30.243.184   <none>        5432/TCP                                             5h18m
+service/counter-frontend                    ClusterIP   172.30.206.203   <none>        3000/TCP                                             80m
+service/counter-postgresadmin               ClusterIP   172.30.129.90    <none>        5050/TCP                                             27m
+service/modelmesh-serving                   ClusterIP   None             <none>        8033/TCP,8008/TCP,8443/TCP,2112/TCP                  23h
+service/workspaced4744050f2044c4d-service   ClusterIP   172.30.168.171   <none>        4444/TCP                                             16m
+
+NAME                                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/counter-backend                    2/2     2            2           3h25m
+deployment.apps/counter-backend-00001-deployment   0/0     0            0           4h20m
+deployment.apps/counter-database                   1/1     1            1           5h20m
+deployment.apps/counter-frontend                   2/2     2            2           82m
+deployment.apps/counter-postgresadmin              0/1     1            0           28m
+deployment.apps/workspaced4744050f2044c4d          1/1     1            1           16m
+
+NAME                                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/counter-backend-00001-deployment-bc577cddd   0         0         0       4h20m
+replicaset.apps/counter-backend-69fb649c69                   2         2         2       3h25m
+replicaset.apps/counter-database-6b687df44b                  1         1         1       5h20m
+replicaset.apps/counter-frontend-7bb6c6b7db                  2         2         2       82m
+replicaset.apps/counter-postgresadmin-6884cfb66c             1         1         0       28m
+replicaset.apps/workspaced4744050f2044c4d-65874cdf6c         1         1         1       16m
+
+NAME                                                   REFERENCE                     TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/counter-backend    Deployment/counter-backend    0%/50%    2         2         2          67m
+horizontalpodautoscaler.autoscaling/counter-frontend   Deployment/counter-frontend   0%/50%    2         4         2          69m
+
+NAME                                                   HOST/PORT                                                                                  PATH   SERVICES                PORT   TERMINATION     WILDCARD
+route.route.openshift.io/counter-backend               counter-backend-jeremy-friedli-dev.apps.sandbox-m3.1530.p1.openshiftapps.com               /      counter-backend         8080   edge/Redirect   None
+route.route.openshift.io/counter-frontend              counter-frontend-jeremy-friedli-dev.apps.sandbox-m3.1530.p1.openshiftapps.com                     counter-frontend        3000   edge/Redirect   None
+route.route.openshift.io/counter-postgresadmin-route   counter-postgresadmin-route-jeremy-friedli-dev.apps.sandbox-m3.1530.p1.openshiftapps.com          counter-postgresadmin   5050   edge/Redirect   None
+
+NAME                                        URL                                                           READY   REASON
+route.serving.knative.dev/counter-backend   http://counter-backend.jeremy-friedli-dev.svc.cluster.local   False   RevisionMissing
+
+NAME                                                 CONFIG NAME       K8S SERVICE NAME   GENERATION   READY   REASON                     ACTUAL REPLICAS   DESIRED REPLICAS
+revision.serving.knative.dev/counter-backend-00001   counter-backend                      1            False   ProgressDeadlineExceeded   0                 
+
+NAME                                                LATESTCREATED           LATESTREADY   READY   REASON
+configuration.serving.knative.dev/counter-backend   counter-backend-00001                 False   RevisionFailed
+
+NAME                                          URL                                                           LATESTCREATED           LATESTREADY   READY   REASON
+service.serving.knative.dev/counter-backend   http://counter-backend.jeremy-friedli-dev.svc.cluster.local   counter-backend-00001                 False   RevisionMissing
